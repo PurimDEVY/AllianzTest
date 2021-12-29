@@ -1,19 +1,30 @@
 package allianz.test.gsi.controller;
 
-import allianz.test.gsi.model.Employee;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import allianz.test.gsi.model.dto.EmployeeDto;
+import allianz.test.gsi.model.entity.Employee;
+import allianz.test.gsi.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
 public class EmployeeController {
 
+    @Autowired
+    private EmployeeService employeeService;
 
-    @GetMapping("/getall")
-    public @ResponseBody ResponseEntity<Employee> getAllEmployee(){
-        return null;
+    @GetMapping("/employee")
+    @ResponseBody
+    public List<Employee> getAll(){
+        return employeeService.getAllEmployee();
+    }
+
+    @PostMapping("/employee")
+    @ResponseBody
+    public Employee create(@RequestBody EmployeeDto employeeDto){
+
+        employeeService.saveEmployee(employeeDto);
+        return  null;
     }
 }
